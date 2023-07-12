@@ -1,11 +1,16 @@
 <script setup>
 import Card from "../../components/UI/Card.vue"
+import trackioLogo from "../../assets/trackioLogo.png"
 </script>
 <template>
     <section class="container login-container">
         <Card>
             <form action="">
-                <h1>Welcome to Trackio</h1>
+                <div class="form-header">
+                    <h1>Welcome to</h1>
+                    <img :src="trackioLogo" alt="trackioLogo" class="trackioLogo">
+                </div>
+
                 <div class="main-form-box">
                     <div class="input-container">
                         <input type="text" placeholder="Username">
@@ -23,6 +28,19 @@ import Card from "../../components/UI/Card.vue"
     </section>
 </template>
 <style scoped>
+.form-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.trackioLogo {
+    width: 160px;
+    border-radius: 10px;
+}
+
 .login-container {
     height: 100vh;
     width: 100vw;
@@ -35,7 +53,7 @@ form {
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    gap: 2.7rem;
     margin-bottom: 2rem;
 }
 
@@ -56,7 +74,7 @@ h1 {
 
 .main-form-box p {
     font-size: 0.8rem;
-    margin-top: 0.25rem;
+    margin-top: 0.4rem;
 }
 
 .main-form-box button {
