@@ -3,6 +3,7 @@ import { reactive } from 'vue';
 import Card from "../../components/UI/Card.vue"
 import trackioLogo from "../../assets/trackioLogo.png"
 import Spinner from "../../components/UI/Spinner.vue"
+import router from "../../router"
 import { useUserStore } from "../../stores/users"
 import { storeToRefs } from "pinia"
 
@@ -24,6 +25,7 @@ const handleSignupSubmit = async (e) => {
     await userStore.handleSignup(userCredentials)
     if (user.value) {
         clearUserCredentials()
+        router.push('/')
     }
 }
 </script>

@@ -1,11 +1,35 @@
 <script setup>
+import { reactive } from 'vue';
 import Card from "../../components/UI/Card.vue"
 import trackioLogo from "../../assets/trackioLogo.png"
+import Spinner from "../../components/UI/Spinner.vue"
+import router from "../../router"
+import { useUserStore } from "../../stores/users"
+import { storeToRefs } from "pinia"
+
+const userStore = useUserStore()
+const { errorMessage, loading, user } = storeToRefs(userStore)
+const userCredentials = reactive({
+    email: '',
+    password: '',
+})
+
+
+const handleSubmitLogin = async (e) => {
+    e.preventDefault()
+    await userStore.handleLogin({
+        password: userCredentials.password,
+        email: userCredentials.email
+    })
+    if (user.value) {
+        router.push('/home')
+    }
+}
 </script>
 <template>
     <section class="container login-container">
         <Card>
-            <form action="">
+            <form @submit="handleSubmitLogin">
                 <div class="form-header">
                     <h1>Welcome to</h1>
                     <img :src="trackioLogo" alt="trackioLogo" class="trackioLogo">
@@ -13,13 +37,14 @@ import trackioLogo from "../../assets/trackioLogo.png"
 
                 <div class="main-form-box">
                     <div class="input-container">
-                        <input type="text" placeholder="Username">
-                        <input type="text" placeholder="Password">
+                        <input type="email" placeholder="Email" v-model="userCredentials.email">
+                        <input type="password" placeholder="Password" v-model="userCredentials.password">
                     </div>
 
                     <p>Don't you have an account yet? sign up <RouterLink to="/signup" class="signup-link">here</RouterLink>
                     </p>
                     <button type="submit"> Login</button>
+                    <p>{{ errorMessage }}</p>
                 </div>
 
             </form>
