@@ -1,26 +1,52 @@
 <script setup>
+import { reactive } from 'vue';
 import Card from "../../components/UI/Card.vue"
 import trackioLogo from "../../assets/trackioLogo.png"
+import Spinner from "../../components/UI/Spinner.vue"
+import { useUserStore } from "../../stores/users"
+import { storeToRefs } from "pinia"
+
+const userStore = useUserStore()
+const { errorMessage, loading, user } = storeToRefs(userStore)
+const userCredentials = reactive({
+    email: '',
+    password: '',
+    username: ''
+})
+
+const clearUserCredentials = () => {
+    userCredentials.email = ''
+    userCredentials.username = ''
+    userCredentials.password = ''
+}
+const handleSignupSubmit = async (e) => {
+    e.preventDefault()
+    await userStore.handleSignup(userCredentials)
+    if (user.value) {
+        clearUserCredentials()
+    }
+}
 </script>
 <template>
     <section class="container login-container">
         <Card>
-            <form action="">
+            <Spinner v-if="loading" />
+            <form @submit="handleSignupSubmit" name="signupForm" v-else>
                 <div class="form-header">
                     <h1>Sign up</h1>
                     <img :src="trackioLogo" alt="trackioLogo" class="trackioLogo">
                 </div>
                 <div class="main-form-box">
                     <div class="input-container">
-                        <input type="text" placeholder="Email">
-                        <input type="text" placeholder="Username">
-                        <input type="text" placeholder="Password">
+                        <input type="email" placeholder="Email" v-model="userCredentials.email">
+                        <input type="text" placeholder="Username" v-model="userCredentials.username">
+                        <input type="password" placeholder="Password" v-model="userCredentials.password">
+                        <p>{{ errorMessage }}</p>
                     </div>
                     <button type="submit"> Signup</button>
                 </div>
 
             </form>
-
         </Card>
     </section>
 </template>
