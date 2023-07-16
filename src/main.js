@@ -1,5 +1,5 @@
 import './assets/main.css'
-
+import Antd from "ant-design-vue"
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { useUserStore } from './stores/users'
@@ -15,6 +15,7 @@ const app = createApp(App)
 app.use(pinia)
 app.use(router)
 app.use(naive)
+app.use(Antd)
 const userStore = useUserStore()
 app.use(userStore)
 app.mount('#app')

@@ -1,5 +1,6 @@
 <script setup>
 import router from "../router";
+import Applied from "../components/applications/Applied.vue";
 import { useUserStore } from "../stores/users"
 import { storeToRefs } from "pinia"
 
@@ -13,13 +14,56 @@ const handleLogoutButton = async () => {
 </script>
 <template>
     <section class="container home-container">
-        <h5>Welcome back {{ user && user.username }}</h5>
-        <button @click="handleLogoutButton">logout</button>
+        <div class="home-header">
+            <h3 class="username-greeting">Hi,{{ user && user.username }}</h3>
+            <div class="job-applications-container">
+                <h6 class="h6-label">Manage my <br /> job applications</h6>
+            </div>
+        </div>
+        <div class="applications">
+            <Applied />
+        </div>
+
     </section>
 </template>
+
 <style scoped>
 .home-container {
     height: 100vh;
-    color: white;
+    color: #CEC7BF;
+}
+
+.username-greeting {
+    font-size: 1.8rem;
+}
+
+.h6-label {
+    font-size: 1.2rem;
+}
+
+.home-header {
+    height: 28vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    border-bottom: 1px solid #CEC7BF;
+}
+
+.job-applications-container {
+    max-width: 500px;
+    min-width: 300px;
+    height: 6.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #3D737F;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.applications {
+    height: 72vh;
 }
 </style>
