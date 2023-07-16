@@ -2,14 +2,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from "../views/auth/Login.vue"
 import Signup from "../views/auth/Signup.vue"
 import Home from "../views/Home.vue"
+import { useUserStore } from "../stores/users"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: Login
+      name: 'home',
+      component: Home,
+      meta: { requiresAuth: true }
     },
     {
       path: '/signup',
@@ -17,11 +19,21 @@ const router = createRouter({
       component: Signup
     },
     {
-      path: '/home',
-      name: 'home',
-      component: Home
+      path: '/login',
+      name: 'login',
+      component: Login
     },
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore()
+  await userStore.getUser()
+  if (to.matched.some(record => record.meta.requiresAuth) && !userStore.user) {
+    next({ name: 'login' }) // Redirect to the login page if not authenticated
+  } else {
+    next()
+  }
 })
 
 export default router

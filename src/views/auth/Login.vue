@@ -22,7 +22,8 @@ const handleSubmitLogin = async (e) => {
         email: userCredentials.email
     })
     if (user.value) {
-        router.push('/home')
+        // console.log('inside if in login', user.value)
+        router.push('/')
     }
 }
 </script>

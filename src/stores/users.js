@@ -113,24 +113,29 @@ export const useUserStore = defineStore('users', () => {
     console.log('this is the user, TESTING', user.value)
     loading.value = false
   }
-  const handleLogout = () => {
-
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    user.value = null
   }
   const getUser = async () => {
     loading.value = true
     const response = await supabase.auth.getUser()
-    const userWithEmail = await supabase
-      .from("users")
-      .select()
-      .eq("email", response.data.user.email)
-      .single()
+    if (response && response.data.user && response.data.user.email) {
+      const userWithEmail = await supabase
+        .from("users")
+        .select()
+        .eq("email", response.data.user.email)
+        .single()
+      user.value = {
+        username: userWithEmail.data.username,
+        email: userWithEmail.data.email,
+        id: userWithEmail.data.id,
 
-    user.value = {
-      username: userWithEmail.data.username,
-      email: userWithEmail.data.email,
-      id: userWithEmail.data.id,
-
+      }
+    } else {
+      user.value = null
     }
+
     loading.value = false
   }
   return { user, errorMessage, loading, handleLogin, handleSignup, handleLogout, getUser }
