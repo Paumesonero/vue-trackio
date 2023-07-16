@@ -16,22 +16,29 @@ const router = createRouter({
     {
       path: '/signup',
       name: 'signup',
-      component: Signup
+      component: Signup,
+      meta: { requiresAuth: false },
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: { requiresAuth: false },
     },
   ]
 })
+
 
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
   await userStore.getUser()
   if (to.matched.some(record => record.meta.requiresAuth) && !userStore.user) {
     next({ name: 'login' }) // Redirect to the login page if not authenticated
-  } else {
+  } else if (to.matched.some(record => !record.meta.requiresAuth) && userStore.user) {
+    next({ name: 'home' })
+  }
+
+  else {
     next()
   }
 })
