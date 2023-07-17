@@ -1,5 +1,4 @@
 <script  setup>
-import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons-vue';
 import Applied from '../applications/Applied.vue';
 </script>
 

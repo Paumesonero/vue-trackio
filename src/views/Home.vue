@@ -9,10 +9,6 @@ import { storeToRefs } from "pinia"
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 
-const handleLogoutButton = async () => {
-    await userStore.handleLogout()
-    router.push('/login')
-}
 </script>
 <template>
     <section class="container home-container">
