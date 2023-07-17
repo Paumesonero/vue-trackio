@@ -60,7 +60,7 @@ export const useUserStore = defineStore('users', () => {
       return errorMessage.value = 'Password is too short'
     }
 
-    if (username.length < 4) {
+    if (username.length < 1) {
       return errorMessage.value = 'Username is too short'
     }
 

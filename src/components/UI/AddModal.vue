@@ -14,10 +14,17 @@ const handleOk = (e) => {
 <template>
     <div>
         <a-button class="test" @click="showModal">Add</a-button>
-        <a-modal v-model:open="open" title="Basic Modal" @ok="handleOk">
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+        <a-modal v-model:open="open" title="Add" @ok="handleOk">
+            <input type="text" placeholder="Role">
+            <input type="text" placeholder="Company">
+            <input type="text" placeholder="Location">
+            <p>Applied on:</p>
+            <select name="" id="">
+                <option value="">Linkedin</option>
+                <option value="">Seek</option>
+                <option value="">Infojobs</option>
+                <option value="">Other</option>
+            </select>
         </a-modal>
     </div>
 </template>
