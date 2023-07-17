@@ -7,7 +7,7 @@ import { storeToRefs } from "pinia"
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 
-
+const props = defineProps(['fetchApplications']);
 const open = ref(false);
 const errorMessage = ref('')
 const applicationData = reactive({
@@ -49,7 +49,7 @@ const handleOk = async (formData) => {
 
 
 
-    const { error } = await supabase.from('applications').insert({
+    const { error, data } = await supabase.from('applications').insert({
         user_id: user.value.id,
         role: capitalizedRole,
         location: capitalizedLocation,
@@ -60,7 +60,12 @@ const handleOk = async (formData) => {
         return errorMessage.value = 'Oops an error has ocured, try later'
     }
 
+    await props.fetchApplications();
     errorMessage.value = ''
+    applicationData.role = ''
+    applicationData.location = ''
+    applicationData.platform = ''
+    applicationData.company = ''
     open.value = false;
 };
 </script>

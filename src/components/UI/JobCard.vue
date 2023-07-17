@@ -1,3 +1,6 @@
+<script setup>
+
+</script>
 <template>
     <div class="card_container">
         <slot></slot>
@@ -19,6 +22,6 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
-    background-color: rgb(206, 199, 191);
+    /* background-color: rgb(206, 199, 191); */
 }
 </style>
