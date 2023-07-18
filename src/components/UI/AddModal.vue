@@ -54,7 +54,8 @@ const handleOk = async (formData) => {
         role: capitalizedRole,
         location: capitalizedLocation,
         platform: capitalizedPlatform,
-        company: capitalizedCompany
+        company: capitalizedCompany,
+        status: 'applied'
     })
     if (error) {
         return errorMessage.value = 'Oops an error has ocured, try later'

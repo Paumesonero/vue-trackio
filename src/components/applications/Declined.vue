@@ -1,45 +1,22 @@
 <script setup>
-import AddModal from "../UI/AddModal.vue"
 import JobCard from "../UI/JobCard.vue"
-import Spinner from "../UI/Spinner.vue"
 import { supabase } from "../../supabase"
-import { useUserStore } from "../../stores/users"
-import { storeToRefs } from "pinia"
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
-const applicationsFromDb = ref([])
+const { declinedApplications, fetchData } = defineProps(['declinedApplications', 'fetchData'])
 const errorMessage = ref('')
 
-const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
-const isLoading = ref(false)
-
-// we get data from api
-const fetchApplications = async () => {
-
-    const res = await supabase.from('applications').select().eq('user_id', user.value.id).eq('status', 'applied')
-    if (res.data.length >= 1) {
-        applicationsFromDb.value = res.data
-
-        return applicationsFromDb.value.reverse()
-    } else {
-        applicationsFromDb.value = []
-    }
-}
-
-onMounted(() => {
-    fetchApplications()
-})
 // we delete data from api
 const handleDelete = async (item) => {
     const { data, error } = await supabase.from('applications').delete().eq('id', item.id)
     if (error) {
         return errorMessage.value = 'Oops something went wrong'
     } else {
-        applicationsFromDb.value = applicationsFromDb.value.filter(
+        declinedApplications.value = declinedApplications.filter(
             (application) => application.id !== item.id
         )
     }
+    await fetchData()
 }
 // various functions, to format date, dymanic class etc.
 const formatDate = (dateString) => {
@@ -52,45 +29,39 @@ const cardClass = (index) => {
 };
 
 // we change the status of the specific item
+const handleHired = async (itemId) => {
+    const { data, error } = await supabase.from('applications').update({ status: 'hired' }).eq('id', itemId)
+    if (error) {
+        console.error('Error updating status:', error);
+        return;
+    }
+    await fetchData()
 
-
+}
 const handleReached = async (itemId) => {
     const { data, error } = await supabase.from('applications').update({ status: 'reached' }).eq('id', itemId)
     if (error) {
         console.error('Error updating status:', error);
         return;
     }
-    fetchApplications()
-}
-
-const handleDeclined = async (itemId) => {
-    const { data, error } = await supabase.from('applications').update({ status: 'declined' }).eq('id', itemId)
-    if (error) {
-        console.error('Error updating status:', error);
-        return;
-    }
-    fetchApplications()
+    await fetchData()
 }
 </script>
 
 <template>
     <section class="applications-box">
         <div class="top-header">
-            <h2 class="applied-header">Applied</h2>
-            <AddModal :fetchApplications="fetchApplications" />
+            <h2 class="applied-header" id="declined">Declined</h2>
         </div>
         <div class="applied-cards-wrapper">
-            <div v-if="applicationsFromDb && applicationsFromDb.length === 0" class="empty-applications">
+            <div v-if="declinedApplications && declinedApplications.length === 0" class="empty-applications">
                 <h6>You don't have any applications yet</h6>
                 <font-awesome-icon icon="fa-solid fa-battery-empty" class="empty-icon" />
             </div>
-            <div v-if="isLoading" class="isLoading">
-                <Spinner />
-            </div>
+
             <TransitionGroup name="applications">
-                <div class="applied-cards" v-for="(application, index) in applicationsFromDb" :key="application.id"
-                    v-if="!isLoading">
-                    <JobCard v-if="applicationsFromDb" :class="cardClass(index)">
+                <div class="applied-cards" v-for="(application, index) in declinedApplications" :key="application.id">
+                    <JobCard v-if="declinedApplications" :class="cardClass(index)">
                         <!-- this could be a component -->
                         <div class="job-info">
                             <h3 class="role-title">{{ application.role }}</h3>
@@ -106,8 +77,7 @@ const handleDeclined = async (itemId) => {
                             </div>
 
                             <div class="card-btns">
-                                <button @click="handleReached(application.id)" class="btn-blue">Reached</button>
-                                <button @click="handleDeclined(application.id)" class="btn-white">Declined</button>
+                                <button @click="handleReached(application.id)">Reached</button>
                             </div>
 
                         </div>
@@ -163,11 +133,6 @@ const handleDeclined = async (itemId) => {
     align-items: flex-start;
 }
 
-.isLoading {
-    position: absolute;
-    top: 300px;
-}
-
 .job-info-left {
     display: flex;
     flex-direction: column;
@@ -216,13 +181,8 @@ const handleDeclined = async (itemId) => {
     background-color: rgb(206, 199, 191);
 }
 
-.white-card button.btn-blue {
+.white-card button {
     background-color: #3D737F;
-}
-
-.white-card button.btn-white {
-    background-color: rgb(7, 22, 27);
-    color: rgb(206, 199, 191);
 }
 
 .blue-card {
@@ -230,13 +190,8 @@ const handleDeclined = async (itemId) => {
     color: rgb(206, 199, 191);
 }
 
-.blue-card button.btn-blue {
-    background-color: rgb(206, 199, 191)
-}
-
-.blue-card button.btn-white {
-    background-color: rgb(7, 22, 27);
-    color: rgb(206, 199, 191);
+.blue-card button {
+    background-color: rgb(206, 199, 191);
 }
 
 .empty-applications {

@@ -9,12 +9,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import naive from 'naive-ui'
 import App from './App.vue'
 import router from './router'
-import { faBars, faBatteryEmpty, faCircleChevronLeft, faCircleChevronRight, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faBatteryEmpty, faCircleChevronLeft, faCircleChevronRight, faTrophy, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 
 const pinia = createPinia()
 const app = createApp(App)
-library.add(faBars, faCircleChevronRight, faCircleChevronLeft, faXmark, faBatteryEmpty)
+library.add(faBars, faCircleChevronRight, faCircleChevronLeft, faXmark, faBatteryEmpty, faTrophy)
 
 
 app.use(pinia)

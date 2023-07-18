@@ -30,21 +30,25 @@ export default defineComponent({
     <n-button-group>
         <font-awesome-icon @click="activate('bottom')" icon="fa-solid fa-bars" class="burger-icon" />
     </n-button-group>
-    <n-drawer v-model:show="active" :width="502" :placement="placement" class="drawer">
+    <n-drawer v-model:show="active" :width="502" :placement="placement" class="drawer" style="background-color: #CEC7BF;">
         <div class="menu-content">
-            <RouterLink to=""> See Statistics</RouterLink>
-            <RouterLink to=""> Applied</RouterLink>
-            <RouterLink to=""> Reached</RouterLink>
-            <RouterLink to="">Declined </RouterLink>
-            <RouterLink to=""> Interview</RouterLink>
-            <RouterLink to=""> Hired</RouterLink>
-            <button @click="handleLogoutButton" class="logout-btn">Logout</button>
+            <RouterLink to="" class="see-statistics-btn"> See Statistics</RouterLink>
+            <button @click="handleLogoutButton" class="logout-btn see-statistics-btn">Logout</button>
         </div>
     </n-drawer>
 </template>
 <style scoped>
 .burger-icon {
     font-size: 2.5rem;
+}
+
+.see-statistics-btn {
+    margin-top: 1rem;
+    color: rgb(7, 22, 27);
+    font-size: 1.5rem;
+    border: none;
+    text-decoration: none;
+
 }
 
 .menu-content {
@@ -57,11 +61,11 @@ export default defineComponent({
 .logout-btn {
     background-color: transparent;
     border: none;
-    max-width: 80px;
+    max-width: 90px;
     padding: 0;
     margin: 0;
     text-align: left;
-    font-weight: 600;
+    font-weight: 400;
 }
 </style>
 
