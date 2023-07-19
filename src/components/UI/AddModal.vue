@@ -1,14 +1,15 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref, reactive } from "vue";
+import { useMessage } from "naive-ui";
 import { supabase } from "../../supabase"
 import { useUserStore } from "../../stores/users"
 import { storeToRefs } from "pinia"
 
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+const showModal = ref(false)
 
 const props = defineProps(['fetchApplications']);
-const open = ref(false);
 const errorMessage = ref('')
 const applicationData = reactive({
     role: '',
@@ -18,25 +19,24 @@ const applicationData = reactive({
 })
 
 
-
-const showModal = () => {
-    open.value = true;
-};
-
-const handleOk = async (formData) => {
+const submitCallback = async (formData) => {
     const { role, company, location, platform } = formData
     // Validations
-    if (role.length < 1) {
+    if (role.trim().length < 1) {
+        showModal.value = true
         return errorMessage.value = 'Role must be provided'
     }
-    if (company.length < 2) {
+    if (company.trim().length < 2) {
+        showModal.value = true
         return errorMessage.value = 'Company name must be provided'
     }
     if (!platform) {
+        showModal.value = true
         return errorMessage.value = 'platform must be selected'
     }
-    if (!location) {
-        return errorMessage.value = 'platform must be selected, eg: remote, Berlin, etc'
+    if (location.trim().length < 2) {
+        showModal.value = true
+        return errorMessage.value = 'Location must be selected, eg: remote, Berlin, etc'
     }
     // capitalizing first letter
     const capitalizeFirstLetter = ([first, ...rest]) => {
@@ -49,7 +49,7 @@ const handleOk = async (formData) => {
 
 
 
-    const { error, data } = await supabase.from('applications').insert({
+    const { error } = await supabase.from('applications').insert({
         user_id: user.value.id,
         role: capitalizedRole,
         location: capitalizedLocation,
@@ -67,30 +67,92 @@ const handleOk = async (formData) => {
     applicationData.location = ''
     applicationData.platform = ''
     applicationData.company = ''
-    open.value = false;
-};
+    showModal.value = false;
+}
 </script>
+
 <template>
-    <div>
-        <a-button class="test" @click="showModal">Add</a-button>
-        <a-modal v-model:open="open" title="Add" @ok="handleOk(applicationData)">
+    <button @click="showModal = true" class="add-btn">Add</button>
+    <n-modal v-model:show="showModal" preset="dialog" title="Add an application"
+        style="background-color: #CEC7BF; border-radius: 10px;">
+        <div class="modal-main-content">
             <input type="text" placeholder="Role" v-model="applicationData.role">
             <input type="text" placeholder="Company" v-model="applicationData.company">
             <input type="text" placeholder="Location" v-model="applicationData.location">
             <p>Applied on:</p>
-            <select name="" id="" v-model="applicationData.platform">
+            <select name="Choose platform" id="" v-model="applicationData.platform" class="select-platform">
+                <option value="" selected disabled hidden>Choose platform</option>
                 <option value="linkedin">Linkedin</option>
-                <option value="seek">Seek</option>
                 <option value="infojobs">Infojobs</option>
+                <option value="seek">Seek</option>
                 <option value="other">Other</option>
             </select>
             <p>{{ errorMessage }}</p>
-        </a-modal>
-    </div>
+        </div>
+        <div class="modal-btns-container">
+            <button class="cancel-btn"> Cancel</button>
+            <button @click="submitCallback(applicationData)" class="submit-btn"> Submit</button>
+        </div>
+    </n-modal>
 </template>
 <style scoped>
-.test {
+.add-btn {
     background-color: #CEC7BF;
-    padding: 1px 10px;
+    padding: 1px 14px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.add-btn:hover {
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.modal-main-content {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-main-content input {
+    max-width: 250px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgb(7, 22, 27);
+    font-weight: 600;
+}
+
+.select-platform {
+    max-width: 250px;
+    height: 30px;
+    border-radius: 10px;
+    padding: 1px 5px;
+    background-color: #CEC7BF;
+    font-weight: 400;
+}
+
+.modal-btns-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.modal-btns-container button {
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.submit-btn {
+    border: none;
+    background-color: #3D737F;
+    font-weight: 600;
+}
+
+.cancel-btn {
+    background-color: #CEC7BF;
+    border: 1px solid rgb(7, 22, 27);
 }
 </style>

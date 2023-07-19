@@ -74,50 +74,53 @@ const handleDeclined = async (itemId) => {
 </script>
 
 <template>
-    <section class="applications-box">
-        <div class="top-header">
-            <h2 class="applied-header">Applied</h2>
-            <AddModal :fetchApplications="fetchApplications" />
-        </div>
-        <div class="applied-cards-wrapper">
-            <div v-if="applicationsFromDb && applicationsFromDb.length === 0" class="empty-applications">
-                <h6>You don't have any applications yet</h6>
-                <font-awesome-icon icon="fa-solid fa-battery-empty" class="empty-icon" />
+    <n-message-provider>
+        <section class="applications-box">
+            <div class="top-header">
+                <h2 class="applied-header">Applied</h2>
+                <AddModal :fetchApplications="fetchApplications" />
             </div>
-            <div v-if="isLoading" class="isLoading">
-                <Spinner />
-            </div>
-            <TransitionGroup name="applications">
-                <div class="applied-cards" v-for="(application, index) in applicationsFromDb" :key="application.id"
-                    v-if="!isLoading">
-                    <JobCard v-if="applicationsFromDb" :class="cardClass(index)">
-                        <!-- this could be a component -->
-                        <div class="job-info">
-                            <h3 class="role-title">{{ application.role }}</h3>
-                            <p>{{ application.company }}</p>
-                            <p>{{ application.location }}</p>
-                            <p>{{ application.platform }}</p>
-                        </div>
-                        <div class="job-info-left">
-                            <div class="date-close">
-                                <p class="application-date">{{ formatDate(application.created_at) }}</p>
-                                <font-awesome-icon icon="fa-solid fa-xmark" class="close-icon"
-                                    @click="handleDelete(application)" />
-                            </div>
-
-                            <div class="card-btns">
-                                <button @click="handleInterview(application.id)" class="btn-blue">Inter <br> view</button>
-                                <button @click="handleDeclined(application.id)" class="btn-white">Declined</button>
-                            </div>
-
-                        </div>
-                        <!-- this could be a component -->
-                    </JobCard>
+            <div class="applied-cards-wrapper">
+                <div v-if="applicationsFromDb && applicationsFromDb.length === 0" class="empty-applications">
+                    <h6>You don't have any applications yet</h6>
+                    <font-awesome-icon icon="fa-solid fa-battery-empty" class="empty-icon" />
                 </div>
-            </TransitionGroup>
-        </div>
+                <div v-if="isLoading" class="isLoading">
+                    <Spinner />
+                </div>
+                <TransitionGroup name="applications">
+                    <div class="applied-cards" v-for="(application, index) in applicationsFromDb" :key="application.id"
+                        v-if="!isLoading">
+                        <JobCard v-if="applicationsFromDb" :class="cardClass(index)">
+                            <!-- this could be a component -->
+                            <div class="job-info">
+                                <h3 class="role-title">{{ application.role }}</h3>
+                                <p>{{ application.company }}</p>
+                                <p>{{ application.location }}</p>
+                                <p>{{ application.platform }}</p>
+                            </div>
+                            <div class="job-info-left">
+                                <div class="date-close">
+                                    <p class="application-date">{{ formatDate(application.created_at) }}</p>
+                                    <font-awesome-icon icon="fa-solid fa-xmark" class="close-icon"
+                                        @click="handleDelete(application)" />
+                                </div>
 
-    </section>
+                                <div class="card-btns">
+                                    <button @click="handleInterview(application.id)" class="btn-blue">Inter <br>
+                                        view</button>
+                                    <button @click="handleDeclined(application.id)" class="btn-white">Declined</button>
+                                </div>
+
+                            </div>
+                            <!-- this could be a component -->
+                        </JobCard>
+                    </div>
+                </TransitionGroup>
+            </div>
+
+        </section>
+    </n-message-provider>
 </template>
 <style scoped>
 .applications-box {
