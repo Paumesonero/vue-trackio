@@ -1,6 +1,5 @@
 <script  setup>
 import Applied from '../applications/Applied.vue';
-import Reached from '../applications/Reached.vue';
 import Interview from '../applications/Interview.vue';
 import Declined from '../applications/Declined.vue'
 import Hired from '../applications/Hired.vue'
@@ -9,24 +8,14 @@ import Hired from '../applications/Hired.vue'
 import { supabase } from "../../supabase"
 import { useUserStore } from "../../stores/users"
 import { storeToRefs } from "pinia"
-import { onMounted, ref, computed, reactive } from 'vue'
+import { ref } from 'vue'
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
-let reachedArr = ref([])
 let declinedArr = ref([])
 let interviewArr = ref([])
 let hiredArr = ref([])
 // we get data from api
-const fetchReachedApplications = async () => {
-    const res = await supabase.from('applications').select().eq('user_id', user.value.id).eq('status', 'reached')
-    if (res.data.length >= 1) {
-        reachedArr.value = res.data
-        console.log('fetching 3!!!!')
-        return reachedArr.value.reverse()
-    } else {
-        reachedArr.value = []
-    }
-}
+
 const fetchDeclinedApplications = async () => {
     const res = await supabase.from('applications').select().eq('user_id', user.value.id).eq('status', 'declined')
     if (res.data.length >= 1) {
@@ -60,26 +49,23 @@ const fetchHiredApplications = async () => {
         <template #prevArrow>
             <div class="custom-slick-arrow" style="left: 10px; z-index: 1; top:79px">
                 <font-awesome-icon icon="fa-solid fa-circle-chevron-left" class="arrow-icon"
-                    @click="fetchReachedApplications(); fetchDeclinedApplications(); fetchInterviewApplications(); fetchHiredApplications()" />
+                    @click=" fetchDeclinedApplications(); fetchInterviewApplications(); fetchHiredApplications()" />
             </div>
         </template>
         <template #nextArrow>
             <div class="custom-slick-arrow " style="right: 10px; top:79px">
                 <font-awesome-icon icon="fa-solid fa-circle-chevron-right" class="arrow-icon"
-                    @click="fetchReachedApplications(); fetchDeclinedApplications(); fetchInterviewApplications(); fetchHiredApplications()" />
+                    @click=" fetchDeclinedApplications(); fetchInterviewApplications(); fetchHiredApplications()" />
             </div>
         </template>
         <div>
             <Applied />
         </div>
         <div>
-            <Reached :reachedApplications="reachedArr" :fetchData="fetchReachedApplications" />
+            <Interview :interviewApplications="interviewArr" :fetchData="fetchInterviewApplications" />
         </div>
         <div>
             <Declined :declinedApplications="declinedArr" :fetchData="fetchDeclinedApplications" />
-        </div>
-        <div>
-            <Interview :interviewApplications="interviewArr" :fetchData="fetchInterviewApplications" />
         </div>
         <div>
             <Hired :hiredApplications="hiredArr" :fetchData="fetchHiredApplications" />

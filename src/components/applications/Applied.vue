@@ -54,8 +54,8 @@ const cardClass = (index) => {
 // we change the status of the specific item
 
 
-const handleReached = async (itemId) => {
-    const { data, error } = await supabase.from('applications').update({ status: 'reached' }).eq('id', itemId)
+const handleInterview = async (itemId) => {
+    const { data, error } = await supabase.from('applications').update({ status: 'interview' }).eq('id', itemId)
     if (error) {
         console.error('Error updating status:', error);
         return;
@@ -106,7 +106,7 @@ const handleDeclined = async (itemId) => {
                             </div>
 
                             <div class="card-btns">
-                                <button @click="handleReached(application.id)" class="btn-blue">Reached</button>
+                                <button @click="handleInterview(application.id)" class="btn-blue">Inter <br> view</button>
                                 <button @click="handleDeclined(application.id)" class="btn-white">Declined</button>
                             </div>
 

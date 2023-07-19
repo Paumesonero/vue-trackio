@@ -29,17 +29,9 @@ const cardClass = (index) => {
 };
 
 // we change the status of the specific item
-const handleHired = async (itemId) => {
-    const { data, error } = await supabase.from('applications').update({ status: 'hired' }).eq('id', itemId)
-    if (error) {
-        console.error('Error updating status:', error);
-        return;
-    }
-    await fetchData()
 
-}
-const handleReached = async (itemId) => {
-    const { data, error } = await supabase.from('applications').update({ status: 'reached' }).eq('id', itemId)
+const handleInterview = async (itemId) => {
+    const { data, error } = await supabase.from('applications').update({ status: 'interview' }).eq('id', itemId)
     if (error) {
         console.error('Error updating status:', error);
         return;
@@ -77,7 +69,7 @@ const handleReached = async (itemId) => {
                             </div>
 
                             <div class="card-btns">
-                                <button @click="handleReached(application.id)">Reached</button>
+                                <button @click="handleInterview(application.id)">Inter <br> view</button>
                             </div>
 
                         </div>

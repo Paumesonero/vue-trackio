@@ -38,14 +38,7 @@ const handleHired = async (itemId) => {
     await fetchData()
 
 }
-const handleReached = async (itemId) => {
-    const { data, error } = await supabase.from('applications').update({ status: 'reached' }).eq('id', itemId)
-    if (error) {
-        console.error('Error updating status:', error);
-        return;
-    }
-    await fetchData()
-}
+
 </script>
 
 <template>
