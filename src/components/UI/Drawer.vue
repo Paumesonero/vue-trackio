@@ -32,7 +32,7 @@ export default defineComponent({
     </n-button-group>
     <n-drawer v-model:show="active" :width="502" :placement="placement" class="drawer" style="background-color: #CEC7BF;">
         <div class="menu-content">
-            <RouterLink to="" class="see-statistics-btn"> See Statistics</RouterLink>
+            <RouterLink to="/statistics" class="see-statistics-btn"> See Statistics</RouterLink>
             <button @click="handleLogoutButton" class="logout-btn see-statistics-btn">Logout</button>
         </div>
     </n-drawer>

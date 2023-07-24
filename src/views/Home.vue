@@ -1,6 +1,4 @@
 <script setup>
-import router from "../router";
-import Applied from "../components/applications/Applied.vue";
 import Carrousel from "../components/UI/Carrousel.vue";
 import Drawer from "../components/UI/Drawer.vue";
 import { useUserStore } from "../stores/users"
