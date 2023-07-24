@@ -3,6 +3,7 @@ import Login from "../views/auth/Login.vue"
 import Signup from "../views/auth/Signup.vue"
 import Home from "../views/Home.vue"
 import Statistics from "../views/Statistics.vue"
+import ApplicationsInfo from "../views/ApplicationsInfo.vue"
 import { useUserStore } from "../stores/users"
 
 const router = createRouter({
@@ -30,6 +31,12 @@ const router = createRouter({
       path: '/statistics',
       name: 'statistics',
       component: Statistics,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/application/:id',
+      name: 'application',
+      component: ApplicationsInfo,
       meta: { requiresAuth: true },
     },
   ]

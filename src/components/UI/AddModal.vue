@@ -16,11 +16,13 @@ const applicationData = reactive({
     company: '',
     location: '',
     platform: '',
+    description: '',
+    links: ''
 })
 
 
 const submitCallback = async (formData) => {
-    const { role, company, location, platform } = formData
+    const { role, company, location, platform, description, links } = formData
     // Validations
     if (role.trim().length < 1) {
         showModal.value = true
@@ -46,6 +48,7 @@ const submitCallback = async (formData) => {
     const capitalizedCompany = capitalizeFirstLetter(company)
     const capitalizedLocation = capitalizeFirstLetter(location)
     const capitalizedPlatform = capitalizeFirstLetter(platform)
+    const capitalizedDescription = capitalizeFirstLetter(description)
 
 
 
@@ -55,7 +58,9 @@ const submitCallback = async (formData) => {
         location: capitalizedLocation,
         platform: capitalizedPlatform,
         company: capitalizedCompany,
-        status: 'applied'
+        status: 'applied',
+        description: capitalizedDescription,
+        links: links
     })
     if (error) {
         return errorMessage.value = 'Oops an error has ocured, try later'
@@ -79,6 +84,9 @@ const submitCallback = async (formData) => {
             <input type="text" placeholder="Role" v-model="applicationData.role">
             <input type="text" placeholder="Company" v-model="applicationData.company">
             <input type="text" placeholder="Location" v-model="applicationData.location">
+            <input type="text" placeholder="Useful Links" v-model="applicationData.links">
+            <textarea name="description" cols="30" rows="10" v-model="applicationData.description"
+                placeholder="Add description"></textarea>
             <p>Applied on:</p>
             <select name="Choose platform" id="" v-model="applicationData.platform" class="select-platform">
                 <option value="" selected disabled hidden>Choose platform</option>
@@ -123,6 +131,14 @@ const submitCallback = async (formData) => {
     border: none;
     border-bottom: 1px solid rgb(7, 22, 27);
     font-weight: 600;
+}
+
+textarea {
+    background-color: transparent;
+    border: 1px solid rgb(7, 22, 27);
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 10px;
 }
 
 .select-platform {

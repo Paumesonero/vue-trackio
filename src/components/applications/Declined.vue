@@ -69,7 +69,8 @@ const handleInterview = async (itemId) => {
                             </div>
 
                             <div class="card-btns">
-                                <button @click="handleInterview(application.id)">Inter <br> view</button>
+                                <button @click="handleInterview(application.id)" class="hover-btn">Inter <br>
+                                    view</button>
                             </div>
 
                         </div>
@@ -82,6 +83,10 @@ const handleInterview = async (itemId) => {
     </section>
 </template>
 <style scoped>
+.hover-btn:hover {
+    cursor: pointer;
+}
+
 .applications-box {
     margin-top: 4rem;
     display: flex;

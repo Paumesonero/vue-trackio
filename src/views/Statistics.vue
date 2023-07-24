@@ -11,8 +11,9 @@ import OverallChart from "../components/charts/OverallChart.vue"
             <Drawer />
         </div>
         <h2 class="statistics-heading">Statistics</h2>
-        <div>
+        <div class="cards-container">
             <Card class="pie-chart-overall">
+                <h6>Overall</h6>
                 <OverallChart />
             </Card>
         </div>
@@ -43,8 +44,10 @@ import OverallChart from "../components/charts/OverallChart.vue"
     margin-bottom: 1.5rem;
 }
 
-/* .pie-chart-overall {
-    background-color: #3D737F;
-    color: rgb(7, 22, 27);
-} */
+.cards-container {
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>

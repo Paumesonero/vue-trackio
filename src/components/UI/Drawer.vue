@@ -33,6 +33,7 @@ export default defineComponent({
     <n-drawer v-model:show="active" :width="502" :placement="placement" class="drawer" style="background-color: #CEC7BF;">
         <div class="menu-content">
             <RouterLink to="/statistics" class="see-statistics-btn"> See Statistics</RouterLink>
+            <RouterLink to="/" class="see-statistics-btn"> Home</RouterLink>
             <button @click="handleLogoutButton" class="logout-btn see-statistics-btn">Logout</button>
         </div>
     </n-drawer>
@@ -43,7 +44,6 @@ export default defineComponent({
 }
 
 .see-statistics-btn {
-    margin-top: 1rem;
     color: rgb(7, 22, 27);
     font-size: 1.5rem;
     border: none;
@@ -54,8 +54,10 @@ export default defineComponent({
 .menu-content {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     padding: 5px 10px;
-    gap: 10px;
+    gap: 1px;
+    margin-top: 1rem;
 }
 
 .logout-btn {

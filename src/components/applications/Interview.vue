@@ -77,8 +77,9 @@ const handleDeclined = async (itemId) => {
                             </div>
 
                             <div class="card-btns">
-                                <button @click="handleHired(application.id)" class="btn-hire">Hired</button>
-                                <button @click="handleDeclined(application.id)" class="btn-decline">Declined</button>
+                                <button @click="handleHired(application.id)" class="btn-hire hover-btn">Hired</button>
+                                <button @click="handleDeclined(application.id)"
+                                    class="btn-decline hover-btn">Declined</button>
                             </div>
 
                         </div>
@@ -91,6 +92,10 @@ const handleDeclined = async (itemId) => {
     </section>
 </template>
 <style scoped>
+.hover-btn:hover {
+    cursor: pointer;
+}
+
 .applications-box {
     margin-top: 4rem;
     display: flex;

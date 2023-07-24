@@ -6,6 +6,7 @@ import { supabase } from "../../supabase"
 import { useUserStore } from "../../stores/users"
 import { storeToRefs } from "pinia"
 import { onMounted, ref } from 'vue'
+import router from "../../router"
 
 const applicationsFromDb = ref([])
 const errorMessage = ref('')
@@ -13,6 +14,7 @@ const errorMessage = ref('')
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 const isLoading = ref(false)
+const openDetails = ref(false)
 
 // we get data from api
 const fetchApplications = async () => {
@@ -71,6 +73,10 @@ const handleDeclined = async (itemId) => {
     }
     fetchApplications()
 }
+
+const handleDetails = (id) => {
+    return router.push(`/application/${id}`)
+}
 </script>
 
 <template>
@@ -94,7 +100,7 @@ const handleDeclined = async (itemId) => {
                         <JobCard v-if="applicationsFromDb" :class="cardClass(index)">
                             <!-- this could be a component -->
                             <div class="job-info">
-                                <h3 class="role-title">{{ application.role }}</h3>
+                                <h3 class="role-title" @click="handleDetails(application.id)">{{ application.role }}</h3>
                                 <p>{{ application.company }}</p>
                                 <p>{{ application.location }}</p>
                                 <p>{{ application.platform }}</p>
@@ -107,9 +113,10 @@ const handleDeclined = async (itemId) => {
                                 </div>
 
                                 <div class="card-btns">
-                                    <button @click="handleInterview(application.id)" class="btn-blue">Inter <br>
+                                    <button @click="handleInterview(application.id)" class="btn-blue hover-btn">Inter <br>
                                         view</button>
-                                    <button @click="handleDeclined(application.id)" class="btn-white">Declined</button>
+                                    <button @click="handleDeclined(application.id)"
+                                        class="btn-white hover-btn">Declined</button>
                                 </div>
 
                             </div>
@@ -118,11 +125,14 @@ const handleDeclined = async (itemId) => {
                     </div>
                 </TransitionGroup>
             </div>
-
         </section>
     </n-message-provider>
 </template>
 <style scoped>
+.hover-btn:hover {
+    cursor: pointer;
+}
+
 .applications-box {
     margin-top: 4rem;
     display: flex;

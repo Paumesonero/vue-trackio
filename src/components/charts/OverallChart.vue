@@ -11,8 +11,11 @@ const appliedNum = ref(0)
 const rejectedNum = ref(0)
 const interviewNum = ref(0)
 const hiredNum = ref(0)
+const totalApplications = ref(0)
 
-
+const calculateTotalApplications = () => {
+    totalApplications.value = appliedNum.value + rejectedNum.value + interviewNum.value + hiredNum.value;
+};
 // fetcg DATA
 const fetchAppliedApplications = async () => {
     const res = await supabase.from('applications').select().eq('user_id', user.value.id).eq('status', 'applied')
@@ -49,7 +52,7 @@ const fetchHiredApplications = async () => {
 
 
 let myChart = null;
-const labels = ['Applied', 'rejected', 'interview', 'hired'];
+const labels = ['Applied/Pending', 'rejected', 'interview', 'hired'];
 const ctxRef = ref(null);
 const updateChart = () => {
     const data = {
@@ -88,14 +91,29 @@ onMounted(async () => {
     await fetchDeclinedApplications();
     await fetchHiredApplications();
     await fetchInterviewApplications();
+    calculateTotalApplications()
     updateChart();
 });
 
 watch([appliedNum, rejectedNum, interviewNum, hiredNum], () => {
+    calculateTotalApplications()
     updateChart();
 });
 </script>
 <template>
     <canvas id="myChartCanvas"></canvas>
+    <div class="total-applications">
+        Total Applications: <span>{{ totalApplications }}</span>
+    </div>
 </template>
-<style scoped></style>
+<style scoped>
+.total-applications {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+span {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+</style>
