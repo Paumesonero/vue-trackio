@@ -154,12 +154,11 @@ const handleDetails = (id) => {
 }
 
 .applied-cards-wrapper {
-    height: auto;
     margin-top: 1rem;
     max-height: 470px;
     overflow: auto;
     scrollbar-color: #cec7bf;
-    padding-bottom: 10px;
+    padding-bottom: 150px;
 }
 
 .applied-cards {

@@ -108,12 +108,11 @@ const handleInterview = async (itemId) => {
 }
 
 .applied-cards-wrapper {
-    height: fit-content;
     margin-top: 1rem;
     max-height: 470px;
-    /* Set a maximum height for the card wrapper */
     overflow: auto;
     scrollbar-color: #cec7bf;
+    padding-bottom: 150px;
 }
 
 .applied-cards {

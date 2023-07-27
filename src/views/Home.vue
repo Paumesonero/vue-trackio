@@ -28,8 +28,7 @@ const { user } = storeToRefs(userStore)
 
 <style scoped>
 .home-container {
-    height: 100vh;
-    max-height: fit-content;
+    min-height: 100vh;
     color: #CEC7BF;
 }
 
@@ -70,9 +69,6 @@ const { user } = storeToRefs(userStore)
 
 }
 
-.applications {
-    height: 72vh;
-}
 
 /********** Media Queries */
 
