@@ -139,7 +139,6 @@ const handleDetails = (id) => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 30rem;
 }
 
 .applied-header {
