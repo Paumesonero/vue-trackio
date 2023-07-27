@@ -2,7 +2,6 @@
 import { reactive } from 'vue';
 import Card from "../../components/UI/Card.vue"
 import trackioLogo from "../../assets/trackioLogo.png"
-import Spinner from "../../components/UI/Spinner.vue"
 import router from "../../router"
 import { useUserStore } from "../../stores/users"
 import { storeToRefs } from "pinia"
@@ -22,7 +21,6 @@ const handleSubmitLogin = async (e) => {
         email: userCredentials.email
     })
     if (user.value) {
-        // console.log('inside if in login', user.value)
         router.push('/')
     }
 }

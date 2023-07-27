@@ -10,7 +10,6 @@
     padding: 1rem;
     margin-bottom: 0.3rem;
     box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.1);
-    /* margin-top: 1.5rem; */
     max-width: 350px;
     min-width: 350px;
     margin-left: 1rem;

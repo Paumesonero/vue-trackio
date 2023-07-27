@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive } from "vue";
-import { useMessage } from "naive-ui";
 import { supabase } from "../../supabase"
 import { useUserStore } from "../../stores/users"
 import { storeToRefs } from "pinia"
@@ -48,7 +47,7 @@ const submitCallback = async (formData) => {
     const capitalizedCompany = capitalizeFirstLetter(company)
     const capitalizedLocation = capitalizeFirstLetter(location)
     const capitalizedPlatform = capitalizeFirstLetter(platform)
-    const capitalizedDescription = capitalizeFirstLetter(description)
+
 
 
 
@@ -59,7 +58,7 @@ const submitCallback = async (formData) => {
         platform: capitalizedPlatform,
         company: capitalizedCompany,
         status: 'applied',
-        description: capitalizedDescription,
+        description: description,
         links: links
     })
     if (error) {
@@ -72,6 +71,8 @@ const submitCallback = async (formData) => {
     applicationData.location = ''
     applicationData.platform = ''
     applicationData.company = ''
+    applicationData.links = ''
+    applicationData.description = ''
     showModal.value = false;
 }
 </script>
@@ -84,8 +85,8 @@ const submitCallback = async (formData) => {
             <input type="text" placeholder="Role" v-model="applicationData.role">
             <input type="text" placeholder="Company" v-model="applicationData.company">
             <input type="text" placeholder="Location" v-model="applicationData.location">
-            <input type="text" placeholder="Useful Links" v-model="applicationData.links">
-            <textarea name="description" cols="30" rows="10" v-model="applicationData.description"
+            <input type="text" placeholder="Application link" v-model="applicationData.links">
+            <textarea name="description" cols="30" rows="10" maxlength="500" v-model="applicationData.description"
                 placeholder="Add description"></textarea>
             <p>Applied on:</p>
             <select name="Choose platform" id="" v-model="applicationData.platform" class="select-platform">

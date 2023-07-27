@@ -139,6 +139,7 @@ const handleDetails = (id) => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 30rem;
 }
 
 .applied-header {
@@ -154,12 +155,12 @@ const handleDetails = (id) => {
 }
 
 .applied-cards-wrapper {
-    height: fit-content;
+    height: auto;
     margin-top: 1rem;
     max-height: 470px;
-    /* Set a maximum height for the card wrapper */
     overflow: auto;
     scrollbar-color: #cec7bf;
+    padding-bottom: 10px;
 }
 
 .applied-cards {
@@ -214,6 +215,10 @@ const handleDetails = (id) => {
 .role-title {
     text-align: left;
     line-height: 15px;
+}
+
+.role-title:hover {
+    cursor: pointer;
 }
 
 .application-date {
@@ -300,5 +305,13 @@ const handleDetails = (id) => {
 
 .applications-move {
     transition: all 0.5 ease;
+}
+
+@media (max-height: 380px) {
+    .applications-box {
+        background-color: red;
+        height: 300px;
+        /* Adjust the height for smaller viewports */
+    }
 }
 </style>

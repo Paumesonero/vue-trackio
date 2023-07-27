@@ -3,8 +3,6 @@ import Applied from '../applications/Applied.vue';
 import Interview from '../applications/Interview.vue';
 import Declined from '../applications/Declined.vue'
 import Hired from '../applications/Hired.vue'
-//Hereeeeee
-
 import { supabase } from "../../supabase"
 import { useUserStore } from "../../stores/users"
 import { storeToRefs } from "pinia"

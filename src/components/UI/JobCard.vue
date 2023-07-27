@@ -22,6 +22,5 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
-    /* background-color: rgb(206, 199, 191); */
 }
 </style>

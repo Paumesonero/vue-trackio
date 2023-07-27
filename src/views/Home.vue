@@ -29,6 +29,7 @@ const { user } = storeToRefs(userStore)
 <style scoped>
 .home-container {
     height: 100vh;
+    max-height: fit-content;
     color: #CEC7BF;
 }
 
@@ -41,7 +42,7 @@ const { user } = storeToRefs(userStore)
 }
 
 .home-header {
-    height: 28vh;
+    min-height: 240px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

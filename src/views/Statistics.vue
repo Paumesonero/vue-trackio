@@ -4,7 +4,6 @@ import Drawer from "../components/UI/Drawer.vue";
 import OverallChart from "../components/charts/OverallChart.vue"
 
 </script>
-
 <template>
     <section class="container statistics-container">
         <div class="drawer-container">
