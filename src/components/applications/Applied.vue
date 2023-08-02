@@ -225,7 +225,7 @@ const handleDetails = (id) => {
 
 .close-icon:hover {
     cursor: pointer;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
 }
 
 .white-card {

@@ -168,6 +168,10 @@ textarea {
     font-weight: 600;
 }
 
+.submit-btn:hover {
+    cursor: pointer;
+}
+
 .cancel-btn {
     background-color: #CEC7BF;
     border: 1px solid rgb(7, 22, 27);
