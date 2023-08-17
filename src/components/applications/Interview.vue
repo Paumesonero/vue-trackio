@@ -165,7 +165,7 @@ const handleDeclined = async (itemId) => {
 .date-close {
     display: flex;
     width: 100%;
-    gap: 20px;
+    gap: 8px;
 }
 
 .role-title {
