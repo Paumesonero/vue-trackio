@@ -207,7 +207,7 @@ const handleDetails = (id) => {
 .date-close {
     display: flex;
     width: 100%;
-    gap: 8px;
+    gap: 7px;
 }
 
 .role-title {
@@ -220,7 +220,7 @@ const handleDetails = (id) => {
 }
 
 .application-date {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .close-icon:hover {
